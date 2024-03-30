@@ -10,6 +10,10 @@ import {
 } from "@/lib/utils";
 import { NextResponse } from "next/server";
 
+export const maxDuration = 300;
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export const GET = async () => {
   try {
     getConnected();
@@ -41,7 +45,7 @@ export const GET = async () => {
         };
 
         const updateProduct = await Product.findOneAndUpdate(
-          { url: product.url },
+          { url: newProduct.url },
           newProduct
         );
 
