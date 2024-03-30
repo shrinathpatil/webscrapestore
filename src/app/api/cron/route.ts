@@ -49,8 +49,7 @@ export const GET = async () => {
           newProduct
         );
 
-        // const emailNotification = getEmailNotifType(scrapedProduct, product);
-        const emailNotification = "CHANGE_OF_STOCK";
+        const emailNotification = getEmailNotifType(scrapedProduct, product);
 
         if (emailNotification && updateProduct.users.length > 0) {
           const productInfo = {

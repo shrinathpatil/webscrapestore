@@ -46,6 +46,7 @@ export const scrapeAndStoreProduct = async (productUrl: string) => {
     );
 
     console.log("product updated successfully!");
+    revalidatePath("/");
     revalidatePath(`/products/${newProduct._id}`);
   } catch (error) {
     console.log(error);
