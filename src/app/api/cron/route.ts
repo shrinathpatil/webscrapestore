@@ -70,6 +70,9 @@ export const GET = async () => {
       data: updatedProducts,
     });
   } catch (error) {
-    console.log(error);
+    return NextResponse.json({
+      message: "error",
+      data: error,
+    });
   }
 };

@@ -16,6 +16,7 @@ export const getConnected = async () => {
     isConnected = connection.connections[0].readyState === 1;
     console.log("connection established!");
   } catch (error) {
+    console.log(error);
     console.log("Error connecting to MongoDb");
   }
 };
