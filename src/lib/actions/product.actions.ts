@@ -3,6 +3,7 @@
 import { getConnected } from "@/database/connection";
 import { Product } from "@/database/models";
 import { EmailContent, User } from "@/types/types";
+import { revalidatePath } from "next/cache";
 import { generateEmailBody, sendEmail } from "../nodemailer";
 
 export const getProductById = async (id: string) => {
@@ -12,8 +13,10 @@ export const getProductById = async (id: string) => {
 
     if (!product) {
       console.log("Product not found!");
+      revalidatePath("/");
       return null;
     }
+    revalidatePath("/");
     return product;
   } catch (error) {
     console.log(error);
@@ -25,6 +28,7 @@ export const getAllProducts = async () => {
     getConnected();
     const products = await Product.find();
 
+    revalidatePath("/");
     return products;
   } catch (error) {
     console.log(error);
@@ -37,11 +41,13 @@ export const getSimilarProducts = async (id: string) => {
     const currentProduct = await Product.findById(id);
 
     if (!currentProduct) {
+      revalidatePath("/");
       return null;
     }
 
     const similarProducts = await Product.find({ _id: { $ne: id } }).limit(3);
 
+    revalidatePath("/");
     return similarProducts;
   } catch (error) {
     console.log(error);
@@ -65,6 +71,8 @@ export const addUserEmailToProduct = async (id: string, userMail: string) => {
         "WELCOME"
       );
 
+      revalidatePath("/");
+      revalidatePath(`/products/${id}`);
       await sendEmail(emailContent, [userMail]);
       console.log("mail added to product!");
     }
