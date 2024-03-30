@@ -51,6 +51,7 @@ export const GET = async () => {
 
         // const emailNotification = getEmailNotifType(scrapedProduct, product);
         const emailNotification = "CHANGE_OF_STOCK";
+        console.log("email");
         if (emailNotification && updateProduct.users.length > 0) {
           const productInfo = {
             title: updateProduct.title,
@@ -64,6 +65,7 @@ export const GET = async () => {
           const userEmails = updateProduct.users.map((user: any) => user.email);
 
           await sendEmail(emailContent, userEmails);
+          console.log("sent");
         }
         return updateProduct;
       })
